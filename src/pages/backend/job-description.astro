@@ -6,13 +6,13 @@ import { getGuideById } from '../../lib/guide';
 import { getOpenGraphImageUrl } from '../../lib/open-graph';
 import { replaceVariables } from '../../lib/markdown';
 
-const guideId = 'backend-project-ideas';
+const guideId = 'backend-job-description';
 const guide = await getGuideById(guideId);
 
 const { frontmatter: guideData } = guide!;
 
 const ogImageUrl =
-  guideData.seo.ogImageUrl ||
+  guideData.seo?.ogImageUrl ||
   getOpenGraphImageUrl({
     group: 'guide',
     resourceId: guideId,
@@ -20,13 +20,12 @@ const ogImageUrl =
 ---
 
 <BaseLayout
-  title={replaceVariables(guideData.seo.title)}
-  description={replaceVariables(guideData.seo.description)}
-  permalink={`/backend/project-ideas`}
+  title={replaceVariables(guideData?.seo?.title)}
+  description={replaceVariables(guideData?.seo?.description)}
+  permalink={guideData.excludedBySlug}
   canonicalUrl={guideData.canonicalUrl}
   ogImageUrl={ogImageUrl}
 >
   <GuideHeader guide={guide!} />
   <GuideContent guide={guide!} />
-  <div slot="changelog-banner" />
 </BaseLayout>
